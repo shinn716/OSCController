@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Text;
 using System;
 
-public class Manager : MonoBehaviour
+public class Manager : OSCManager
 {
     [SerializeField] private Dropdown dpScene;
     [SerializeField] private InputField ifTime;
