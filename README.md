@@ -1,2 +1,2 @@
-# MyTouchOSC
+# OSCController 
 OSC Controller 
