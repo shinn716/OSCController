@@ -7,11 +7,13 @@ using System;
 
 public class Manager : OSCManager
 {
+    [Space]
+    [SerializeField] private GameObject groupScene1;
     [SerializeField] private Dropdown dpScene;
     [SerializeField] private InputField ifTime;
     [SerializeField] private InputField ifRemoteip;
     [SerializeField] private Text txtLog;
-    [SerializeField] private GameObject groupScene1;
+    [SerializeField] private Toggle togSetting;
     [SerializeField] private Button btnSendTIme;
     [SerializeField] private Button btnConnection;
     [SerializeField] private Button btnSend;
@@ -37,22 +39,22 @@ public class Manager : OSCManager
         btnSendTIme.onClick.AddListener(() =>
         {
             connect.SendMsg("/countdown", time);
-            AddToLog($"{DateTime.Now} address: /countdown value: {time}");
+            AddStringToLog($"{DateTime.Now} address: /countdown value: {time}");
         });
         btnConnection.onClick.AddListener(() =>
         {
             btnConnection.interactable = false;
-            connect.Connect(connect.RemoteIP, () => { btnConnection.interactable = true; });
+            connect.Connect(connect.RemoteIP, () => { btnConnection.interactable = true; togSetting.isOn = false; });
         });
         btnCloseapp.onClick.AddListener(() =>
         {
             connect.SendMsg("/app", "close");
-            AddToLog($"{DateTime.Now} address: /app value: close");
+            AddStringToLog($"{DateTime.Now} address: /app value: close");
         });
         btnSend.onClick.AddListener(() =>
         {
             connect.SendMsg("/scene", scene);
-            AddToLog($"{DateTime.Now} address: /scene value: {scene}");
+            AddStringToLog($"{DateTime.Now} address: /scene value: {scene}");
         });
         dpScene.onValueChanged.AddListener((int v) =>
         {
@@ -62,7 +64,7 @@ public class Manager : OSCManager
         });
     }
 
-    private void AddToLog(string _str)
+    private void AddStringToLog(string _str)
     {
         sb.AppendLine(_str);
         txtLog.text = sb.ToString();

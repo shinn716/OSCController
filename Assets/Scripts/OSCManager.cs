@@ -8,7 +8,6 @@ public class OSCManager : MonoBehaviour, IConnect
     public static OSCManager Instance;
 
     [SerializeField] private GameObject OSCPrefab;
-    [SerializeField] private bool debug = false;
 
     private OSC oscReference;
     private GameObject oscObj = null;
@@ -21,10 +20,6 @@ public class OSCManager : MonoBehaviour, IConnect
         var tip = PlayerPrefs.GetString("remoteIP");
         if (tip != string.Empty)
             remoteIP = tip;
-    }
-    private void OnReceive(OscMessage message)
-    {
-        print("OnReceive: "  + message.address + " Value: " + message.values[0].ToString());
     }
 
 
@@ -56,11 +51,5 @@ public class OSCManager : MonoBehaviour, IConnect
 
         if (_action != null)
             _action.Invoke();
-
-        if (debug)
-        {
-            yield return null;
-            oscReference.SetAllMessageHandler(OnReceive);
-        }
     }
 }
