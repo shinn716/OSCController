@@ -18,6 +18,7 @@ public class Manager : OSCManager
     [SerializeField] private Button btnConnection;
     [SerializeField] private Button btnSend;
     [SerializeField] private Button btnCloseapp;
+    [SerializeField] private Button btnClear;
 
     private StringBuilder sb;
     private string scene = "ready";
@@ -55,6 +56,11 @@ public class Manager : OSCManager
         {
             connect.SendMsg("/scene", scene);
             AddStringToLog($"{DateTime.Now} address: /scene value: {scene}");
+        });
+        btnClear.onClick.AddListener(() =>
+        {
+            sb.Clear();
+            txtLog.text = sb.ToString();
         });
         dpScene.onValueChanged.AddListener((int v) =>
         {
