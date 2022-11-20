@@ -20,6 +20,8 @@ public class Manager : OSCManager
     [SerializeField] private Button btnCloseapp;
     [SerializeField] private Button btnClear;
     [SerializeField] private Button btnTestmsg;
+    [SerializeField] private Button btnMute;
+    [SerializeField] private Button btnPlay;
 
     private StringBuilder sb;
     private string scene = "ready";
@@ -47,6 +49,8 @@ public class Manager : OSCManager
         {
             btnConnection.interactable = false;
             connect.Connect(connect.RemoteIP, () => { btnConnection.interactable = true; togSetting.isOn = false; });
+            connect.SendMsg("/test", "connect");
+            AddStringToLog($"{DateTime.Now} address: /scene value: connect");
         });
         btnCloseapp.onClick.AddListener(() =>
         {
@@ -73,6 +77,16 @@ public class Manager : OSCManager
             if (v == 0) { scene = "ready"; groupScene1.SetActive(false); }
             else if (v == 1) { scene = "scene1"; groupScene1.SetActive(true); }
             else if (v == 2) { scene = "scene2"; groupScene1.SetActive(false); }
+        });
+        btnMute.onClick.AddListener(()=>
+        {
+            connect.SendMsg("/mute", "true");
+            AddStringToLog($"{DateTime.Now} address: /mute value: true");
+        });
+        btnPlay.onClick.AddListener(() =>
+        {
+            connect.SendMsg("/mute", "false");
+            AddStringToLog($"{DateTime.Now} address: /mute value: false");
         });
     }
 
